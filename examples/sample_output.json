@@ -1,0 +1,62 @@
+[
+  {
+    "source_file": "invoices/acme-consulting-2025-01.pdf",
+    "page_count": 1,
+    "invoice": {
+      "vendor_name": "Acme Consulting LLC",
+      "vendor_address": "456 Business Ave, Suite 200, San Francisco, CA 94102",
+      "invoice_number": "INV-2025-0042",
+      "invoice_date": "2025-01-15",
+      "due_date": "2025-02-14",
+      "line_items": [
+        {
+          "description": "Professional Consulting Services - January 2025",
+          "quantity": 40.0,
+          "unit_price": 150.0,
+          "amount": 6000.0
+        },
+        {
+          "description": "Travel Expenses (Client Site Visit)",
+          "quantity": 1.0,
+          "unit_price": 350.0,
+          "amount": 350.0
+        }
+      ],
+      "subtotal": 6350.0,
+      "tax": 508.0,
+      "total": 6858.0,
+      "currency": "USD",
+      "payment_terms": "Net 30"
+    },
+    "confidence_scores": [
+      {
+        "field": "vendor_name",
+        "confidence": "high",
+        "reason": "Clearly printed in header"
+      },
+      {
+        "field": "invoice_number",
+        "confidence": "high",
+        "reason": "Prominently displayed"
+      },
+      {
+        "field": "invoice_date",
+        "confidence": "high",
+        "reason": "Standard date format"
+      },
+      {
+        "field": "total",
+        "confidence": "high",
+        "reason": "Clearly stated with currency"
+      },
+      {
+        "field": "line_items",
+        "confidence": "high",
+        "reason": "Well-formatted table"
+      }
+    ],
+    "extraction_method": "vision",
+    "errors": [],
+    "overall_confidence": "high"
+  }
+]
