@@ -1,0 +1,86 @@
+{
+  "name": "invoice-ai: Extract Invoice Data",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "cea2b2df-6893-4323-9355-0153a609d438",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "command": "invoice-ai extract /tmp/invoice.pdf --format json"
+      },
+      "id": "91936132-2550-4fff-992d-63f6b1e76c0e",
+      "name": "Extract Invoice",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = JSON.parse($input.first().json.stdout);\nreturn [{\n  json: {\n    vendor: output.invoice.vendor_name,\n    invoice_number: output.invoice.invoice_number,\n    date: output.invoice.invoice_date,\n    due_date: output.invoice.due_date,\n    subtotal: output.invoice.subtotal,\n    tax: output.invoice.tax,\n    total: output.invoice.total,\n    currency: output.invoice.currency,\n    confidence: output.overall_confidence,\n    line_items: output.invoice.line_items\n  }\n}];"
+      },
+      "id": "a6cdd6d6-c1ae-45e4-bb34-5aa41fc1d2b4",
+      "name": "Parse JSON Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "YOUR_SPREADSHEET_ID",
+        "sheetName": "Invoices",
+        "columns": {
+          "mappingMode": "autoMapInputData"
+        }
+      },
+      "id": "f7daa7e0-bb53-4442-81be-dd11effbf1f8",
+      "name": "Write to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Invoice": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse JSON Output": {
+      "main": [
+        [
+          {
+            "node": "Write to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

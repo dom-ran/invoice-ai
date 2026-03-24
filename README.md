@@ -163,6 +163,12 @@ csv_str = results_to_csv(results)
 4. **Fallback** -- If image conversion fails, the tool extracts raw text with `pdfplumber` and sends that to Claude instead.
 5. **Export** -- Results are output as formatted JSON or flattened CSV.
 
+## n8n Integration
+
+This tool integrates with [n8n](https://n8n.io) for workflow automation. See the [`n8n/`](./n8n/) directory for importable workflow templates.
+
+For a complete collection of n8n AI workflow templates, see [n8n-ai-workflows](https://github.com/dom-ran/n8n-ai-workflows).
+
 ## Contributing
 
 Contributions are welcome.
